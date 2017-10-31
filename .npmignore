@@ -1,0 +1,11 @@
+*.log
+/.*/
+/coverage/
+/docs/
+/test/
+/.eslint*
+/.flowconfig
+/.gitignore
+/.npmignore
+/.travis.yml
+/src
