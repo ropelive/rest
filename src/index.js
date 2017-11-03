@@ -26,22 +26,30 @@ app.get('/query/:method?', (req, res) => {
     )
 })
 
-app.post('/:kiteId/:method', jsonParser, (req, res) => {
-  const { kiteId, method } = req.params
-  const args = req.body
+app.post(
+  '/:kiteId?/:method',
+  jsonParser,
+  bodyParser.text({ type: '*/*' }),
+  (req, res) => {
+    const { kiteId, method } = req.params
+    const args = req.body
 
-  if (rope.readyState != 1) {
-    return res.status(500).send('REST IS NOT READY')
+    if (rope.readyState != 1) {
+      return res.status(500).send('REST IS NOT READY')
+    }
+
+    rope
+      .tell('run', { kiteId, method, args })
+      .timeout(REST_TIMEOUT)
+      .then(data => res.json(data))
+      .catch(err => {
+        let message = err.message || 'An unknown error occurred'
+        if (err.name == 'TimeoutError')
+          message = `Couldn't get response in ${REST_TIMEOUT}ms`
+        res.status(408).send(message)
+      })
   }
-
-  rope
-    .tell('run', { kiteId, method, args })
-    .timeout(REST_TIMEOUT)
-    .then(data => res.json(data))
-    .catch(() =>
-      res.status(408).send(`Couldn't get response in ${REST_TIMEOUT}ms`)
-    )
-})
+)
 
 app.listen(REST_PORT)
 
