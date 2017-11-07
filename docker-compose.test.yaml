@@ -1,0 +1,9 @@
+version: '2'
+services:
+  base:
+    build: .
+    image: ropelive/rest
+
+  tester:
+    extends: base
+    command: npm test
