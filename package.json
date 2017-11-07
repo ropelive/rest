@@ -5,13 +5,14 @@
   "main": "lib/index.js",
   "scripts": {
     "clean": "rm -rf ./lib",
-    "test": "jest src",
     "start": "babel-node src/index.js",
+    "pretest": "npm run build",
+    "test": "jest src",
     "test:watch": "npm test -- --watch",
-    "prebuild": "npm run clean",
+    "prebuild": "npm install && npm run clean",
     "build": "babel src --out-dir lib --ignore test.js",
     "build:watch": "babel src --watch --out-dir lib --ignore test.js",
-    "prepublishOnly": "npm run test && npm run build"
+    "prepublishOnly": "npm test"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -33,14 +34,7 @@
     "type": "git",
     "url": "github.com/ropelive/rest"
   },
-  "keywords": [
-    "rope",
-    "rpc",
-    "rest",
-    "api",
-    "kite",
-    "microservice"
-  ],
+  "keywords": ["rope", "rpc", "rest", "api", "kite", "microservice"],
   "author": "Gokmen Goksel",
   "license": "MIT"
 }
