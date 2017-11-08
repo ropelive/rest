@@ -1,11 +1,11 @@
-# Rope REST
+# REST
 
-[![Build Status](https://travis-ci.org/ropelive/rest.svg?branch=master)](https://travis-ci.org/ropelive/rest)
+[![CircleCI](https://circleci.com/gh/ropelive/rest/tree/master.svg?style=svg)](https://circleci.com/gh/ropelive/rest/tree/master)
 [![NPM version](https://img.shields.io/npm/v/@rope/rest.svg?style=flat-square)](https://www.npmjs.com/package/@rope/rest)
 
 REST endpoint for Rope nodes to make calls via any HTTP client.
 
-# Getting Started
+## Getting Started
 
 Install dependencies first via `npm install` then start the REST server
 with `npm start`.
@@ -43,6 +43,6 @@ Complete example would be;
 
 * `jq` is a tool for parsing json
 
-# License
+## License
 
 MIT (c) 2017 Rope
