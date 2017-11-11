@@ -1,7 +1,7 @@
 # REST
 
 [![CircleCI](https://circleci.com/gh/ropelive/rest/tree/master.svg?style=svg)](https://circleci.com/gh/ropelive/rest/tree/master)
-[![NPM version](https://img.shields.io/npm/v/@rope/rest.svg?style=flat-square)](https://www.npmjs.com/package/@rope/rest)
+[![NPM version](https://img.shields.io/npm/v/@rope/rest.svg)](https://www.npmjs.com/package/@rope/rest)
 
 REST endpoint for Rope nodes to make calls via any HTTP client.
 
