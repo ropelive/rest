@@ -10,3 +10,6 @@ services:
     ports:
     - "3435:3435"
     command: npm start
+    environment:
+    - "REST_PORT=3435"
+    - "REST_TIMEOUT=10000"
