@@ -11,14 +11,14 @@ const jsonParser = bodyParser.json()
 
 app.get('/', (req, res) => res.send(`ROPE REST ${STATE[rope.readyState]}`))
 
-app.get('/query/:method?', (req, res) => {
-  const { method } = req.params
+app.get('/query/:method?/:region?', (req, res) => {
+  const { method, region } = req.params
   if (rope.readyState != 1) {
     return res.status(500).send('REST IS NOT READY')
   }
 
   rope
-    .tell('query', { method })
+    .tell('query', { method, region })
     .timeout(REST_TIMEOUT)
     .then(data => res.json(data))
     .catch(() =>
