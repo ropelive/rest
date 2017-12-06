@@ -11,7 +11,10 @@ const jsonParser = bodyParser.json()
 
 function run(kiteId, method, args, res) {
   if (rope.readyState != 1) {
-    return res.status(500).send('REST IS NOT READY')
+    return res
+      .status(500)
+      .type('txt')
+      .send('REST IS NOT READY')
   }
 
   rope
@@ -22,16 +25,24 @@ function run(kiteId, method, args, res) {
       let message = err.message || 'An unknown error occurred'
       if (err.name == 'TimeoutError')
         message = `Couldn't get response in ${REST_TIMEOUT}ms`
-      res.status(408).send(message)
+      res
+        .status(408)
+        .type('txt')
+        .send(message)
     })
 }
 
-app.get('/', (req, res) => res.send(`ROPE REST ${STATE[rope.readyState]}`))
+app.get('/', (req, res) =>
+  res.type('txt').send(`ROPE REST ${STATE[rope.readyState]}`)
+)
 
 app.get('/query/:method?', (req, res) => {
   const { method } = req.params
   if (rope.readyState != 1) {
-    return res.status(500).send('REST IS NOT READY')
+    return res
+      .status(500)
+      .type('txt')
+      .send('REST IS NOT READY')
   }
 
   rope
@@ -39,7 +50,10 @@ app.get('/query/:method?', (req, res) => {
     .timeout(REST_TIMEOUT)
     .then(data => res.json(data))
     .catch(() =>
-      res.status(408).send(`Couldn't get response in ${REST_TIMEOUT}ms`)
+      res
+        .status(408)
+        .type('txt')
+        .send(`Couldn't get response in ${REST_TIMEOUT}ms`)
     )
 })
 
