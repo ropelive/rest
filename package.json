@@ -34,7 +34,14 @@
     "type": "git",
     "url": "github.com/ropelive/rest"
   },
-  "keywords": ["rope", "rpc", "rest", "api", "kite", "microservice"],
+  "keywords": [
+    "rope",
+    "rpc",
+    "rest",
+    "api",
+    "kite",
+    "microservice"
+  ],
   "author": "Gokmen Goksel",
   "license": "MIT"
 }
