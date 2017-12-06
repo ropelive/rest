@@ -2,9 +2,9 @@ import express from 'express'
 import bodyParser from 'body-parser'
 
 import { Rope } from '@rope/node'
-import { REST_PORT, REST_TIMEOUT, STATE } from './constants'
+import { ROPE_SERVER, REST_PORT, REST_TIMEOUT, STATE } from './constants'
 
-const rope = new Rope('rope-rest')
+const rope = new Rope('rope-rest', {}, { url: ROPE_SERVER })
 
 const app = express()
 const jsonParser = bodyParser.json()
