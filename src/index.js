@@ -57,6 +57,27 @@ app.get('/query/:method?', (req, res) => {
     )
 })
 
+app.get('/method/:kiteId?/:method', (req, res) => {
+  const { kiteId, method } = req.params
+  let args = req.query.args
+
+  if (!Array.isArray(args)) {
+    args = [args]
+  }
+
+  args = args.map(arg => {
+    try {
+      return JSON.parse(arg)
+    } catch (err) {
+      return arg
+    }
+  })
+
+  if (args.length == 1) args = args[0]
+
+  run(kiteId, method, args, res)
+})
+
 app.post(
   '/:kiteId?/:method',
   jsonParser,
