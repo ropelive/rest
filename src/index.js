@@ -9,6 +9,23 @@ const rope = new Rope('rope-rest', {}, { url: ROPE_SERVER })
 const app = express()
 const jsonParser = bodyParser.json()
 
+function run(kiteId, method, args, res) {
+  if (rope.readyState != 1) {
+    return res.status(500).send('REST IS NOT READY')
+  }
+
+  rope
+    .tell('run', { kiteId, method, args })
+    .timeout(REST_TIMEOUT)
+    .then(data => res.json(data))
+    .catch(err => {
+      let message = err.message || 'An unknown error occurred'
+      if (err.name == 'TimeoutError')
+        message = `Couldn't get response in ${REST_TIMEOUT}ms`
+      res.status(408).send(message)
+    })
+}
+
 app.get('/', (req, res) => res.send(`ROPE REST ${STATE[rope.readyState]}`))
 
 app.get('/query/:method?', (req, res) => {
@@ -34,20 +51,7 @@ app.post(
     const { kiteId, method } = req.params
     const args = req.body
 
-    if (rope.readyState != 1) {
-      return res.status(500).send('REST IS NOT READY')
-    }
-
-    rope
-      .tell('run', { kiteId, method, args })
-      .timeout(REST_TIMEOUT)
-      .then(data => res.json(data))
-      .catch(err => {
-        let message = err.message || 'An unknown error occurred'
-        if (err.name == 'TimeoutError')
-          message = `Couldn't get response in ${REST_TIMEOUT}ms`
-        res.status(408).send(message)
-      })
+    run(kiteId, method, args, res)
   }
 )
 
